@@ -1,0 +1,98 @@
+.ant-layout-sider-trigger {
+  background-color: #262648f3 !important;
+  
+}
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: #404073f3 !important;
+}
+.ant-input:focus,
+.ant-input-focused {
+  box-shadow: none !important;
+  outline: none !important;
+}
+.custom-pagination {
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.custom-pagination .ant-pagination-item {
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-pagination .ant-pagination-item-active {
+  background-color: #0a0e16;
+  color: black;
+}
+.ant-pagination-item-active a {
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+/* Add rounded corners to the segmented control container */
+.ant-segmented {
+  border-radius: 100px !important;
+}
+
+/* Add background color and rounded corners to the segmented control group */
+.ant-segmented-group {
+  border-radius: 100px !important;
+  padding: 3px 10px;
+  /* width: 400px !important; */
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFFFF !important;
+}
+
+/* Style individual segmented items */
+.ant-segmented-item {
+  border-radius: 100px !important;
+}
+
+/* Style the selected segmented item */
+.ant-segmented-item-selected {
+  background-color: #F6F6F6 !important; /* Selected item background color */
+  border-radius: 100px !important;
+}
+
+.ant-upload .ant-upload-select{
+  width: 100% !important;
+}
+.ant-upload-list .ant-upload-list-picture-card{
+  width: 100% !important;
+}
+
+/* chatstyle#262648f3#262648f3 */
+.chat-notification {
+    display: flex;
+    max-width: 24rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  .chat-notification-logo-wrapper {
+    flex-shrink: 0;
+  }
+  .chat-notification-logo {
+    height: 3rem;
+    width: 3rem;
+  }
+  .chat-notification-content {
+    margin-left: 1.5rem;
+    padding-top: 0.25rem;
+  }
+  .chat-notification-title {
+    color: #1a202c;
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+  .chat-notification-message {
+    color: #718096;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
