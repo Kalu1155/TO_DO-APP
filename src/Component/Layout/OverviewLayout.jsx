@@ -61,19 +61,19 @@ const OverviewLayout = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  useEffect(() => {
-    try {
-      const loggedUser = JSON.parse(localStorage.getItem("user"));
-      if (loggedUser && loggedUser.username) {
-        setUsername(loggedUser.username);
-      } else {
-        window.location.href = "/";
-      }
-    } catch (error) {
-      console.error("Failed to parse user data:", error);
-      window.location.href = "/";
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     const loggedUser = JSON.parse(localStorage.getItem("user"));
+  //     if (loggedUser && loggedUser.username) {
+  //       setUsername(loggedUser.username);
+  //     } else {
+  //       window.location.href = "/";
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to parse user data:", error);
+  //     window.location.href = "/";
+  //   }
+  // }, []);
   const handleLogout = () => {
     localStorage.removeItem("user");
     window.location.href = "/";

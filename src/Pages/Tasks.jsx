@@ -5,7 +5,7 @@ import {
   MenuItems,
   Menu as HeadlessMenu,
 } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+// import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Modal, Input, Button } from "antd";
 import { Edit } from "lucide-react";
 import { IoOptions } from "react-icons/io5";
@@ -16,6 +16,7 @@ const { TextArea } = Input;
 
 const Tasks = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -23,7 +24,19 @@ const Tasks = () => {
     title: "",
     note: "",
   });
-
+  const showeditModal = () => {
+    setIsEditModalOpen(true);
+  };
+  const handleEditCancel = () => {
+    setIsEditModalOpen(false);
+  };
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -58,14 +71,9 @@ const Tasks = () => {
     return <div>Loading tasks...</div>;
   }
 
-  const inputClass = "bg-[#F6F6F6] hover:!bg-[#F6F6F6] focus:!bg-[#F6F6F6] border-none";
+  const inputClass =
+    "bg-[#F6F6F6] hover:!bg-[#F6F6F6] focus:!bg-[#F6F6F6] border-none";
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCreateTask({ ...createTask, [name]: value });
@@ -106,9 +114,7 @@ const Tasks = () => {
       console.error("Error deleting task:", error);
     }
   };
-  const showeditModal = () => {
-    setIsModalOpen(true);
-  };
+
   //  const handleEditTask = async (id) =>{
   //   try {
   //     const response = await fetch(`http://localhost:3000/tasks/${id}`, {
@@ -167,72 +173,15 @@ const Tasks = () => {
             <div className="flex justify-end mt-4">
               <Button
                 className="text-white bg-[#262648f3] rounded-full hover:!bg-white px-7 py-5 outline-none"
-                onClick={taskCreation}>
+                onClick={taskCreation}
+              >
                 Done
               </Button>
             </div>
           </Modal>
         </div>
       </div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-1">
-
-        <div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
-          <div className="flex justify-between p-2">
-            <p className="text-2xl font-semibold underline ">
-              Washing of Plate
-            </p>
-
-            <HeadlessMenu as="div" className="relative inline-block text-left">
-              <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
-                <div>
-                  <IoOptions size={20} />
-                </div>
-              </MenuButton>
-              <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
-                <div>
-                  <MenuItem>
-                    {({ active }) => (
-                      <>
-                        <button
-                          type="button"
-                          className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          <p className="pr-12">Edit Task</p>
-                          <Edit size={15} />
-                        </button>
-                        <button
-                          type="button"
-                          className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
-                            active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          <p className="pr-7">Delete Task</p>
-                          <MdDeleteOutline size={18} />
-                        </button>
-                      </>
-                    )}
-                  </MenuItem>
-                </div>
-              </MenuItems>
-            </HeadlessMenu>
-          </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            aspernatur corporis illo officia! Officiis minima sit sed nostrum
-            consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
-            eos ex aut laudantium.
-          </p>
-          <div className="flex flex-row-reverse flex-1">
-            <input type="checkbox" className="" name="" id="" />
-          </div>
-        </div>
-
+      {/* <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-1">
         {tasks.map((task) => (
           <div
             key={task.id}
@@ -269,28 +218,25 @@ const Tasks = () => {
                                 ? "bg-gray-100 text-gray-900"
                                 : "text-gray-700"
                             }`}
-                          onClick={showeditModal}>
+                            onClick={showeditModal}
+                          >
                             <p className="pr-12">Edit Task</p>
                             <Edit size={15} />
                           </button>
                           <Modal
                             title="Edit Task"
-                            open={isModalOpen}
+                            open={isEditModalOpen}
                             footer={null}
-                            onCancel={handleCancel}
+                            onCancel={handleEditCancel}
                           >
-                            <p className="text-sm font-semibold mt-4">
-                              Title:
-                            </p>
+                            <p className="text-sm font-semibold mt-4">Title:</p>
                             <TextArea
                               rows={3}
                               placeholder="Task Name"
                               maxLength={200}
                               className={`${inputClass} !resize-none`}
                             />
-                            <p className="text-sm font-semibold mt-4">
-                              Note:
-                            </p>
+                            <p className="text-sm font-semibold mt-4">Note:</p>
                             <TextArea
                               rows={3}
                               placeholder="Note:"
@@ -341,7 +287,628 @@ const Tasks = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
+
+<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-1">
+
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+<div className="bg-[#262648f3] w-auto rounded-lg h-auto p-2 text-white m-1">
+  <div className="flex justify-between p-2">
+    <p className="text-2xl font-semibold underline ">
+      Washing of Plate
+    </p>
+
+    <HeadlessMenu as="div" className="relative inline-block text-left">
+      <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-2 py-1 text-sm font-semibold text-gray-50 hover:text-gray-950 shadow-sm ring-2 ring-inset ring-gray-100 hover:bg-gray-100">
+        <div>
+          <IoOptions size={20} />
+        </div>
+      </MenuButton>
+      <MenuItems className="absolute z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none w-36 mt-2 p-1">
+        <div>
+          <MenuItem>
+            {({ active }) => (
+              <>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-12">Edit Task</p>
+                  <Edit size={15} />
+                </button>
+                <button
+                  type="button"
+                  className={`flex justify-between items-center px-2 py-1 text-left text-sm hover:ring-2 ring-inset ring-[#262648f3] rounded ${
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
+                  }`}
+                >
+                  <p className="pr-7">Delete Task</p>
+                  <MdDeleteOutline size={18} />
+                </button>
+              </>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </HeadlessMenu>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+    aspernatur corporis illo officia! Officiis minima sit sed nostrum
+    consequatur unde cum aut. Dolore accusantium voluptas repudiandae,
+    eos ex aut laudantium.
+  </p>
+  <div className="flex flex-row-reverse flex-1">
+    <input type="checkbox" className="" name="" id="" />
+  </div>
+</div>
+</div>
     </>
   );
 };

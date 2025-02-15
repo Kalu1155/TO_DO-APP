@@ -7,47 +7,46 @@ const SignIn = () => {
   const [login, setLogin] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser?.loggedIn) {
-      console.log("User is already logged in:", storedUser.email);
-      navigate("/overview");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+  //   if (storedUser?.loggedIn) {
+  //     console.log("User is already logged in:", storedUser.email);
+  //     navigate("/overview");
+  //   }
+  // }, [navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setLogin({ ...login, [name]: value });
   };
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    setError(""); // Clear previous errors
+  // const handleSignIn = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
 
-    try {
-      // Fetch all registered users from the signup API
-      const response = await axios.get("http://localhost:3000/users");
-      const users = response.data; // Assuming the API returns an array of user objects
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/users");
+  //     const users = response.data; 
+  //     const user = users.find(
+  //       (u) => u.email === login.email && u.password === login.password
+  //     );
 
-      // Check if the user exists and the credentials match
-      const user = users.find(
-        (u) => u.email === login.email && u.password === login.password
-      );
+  //     if (user) {
+  //       const userData = { username: user.username, loggedIn: true };
+  //       localStorage.setItem("user", JSON.stringify(userData));
 
-      if (user) {
-        const userData = { username: user.username, loggedIn: true };
-        localStorage.setItem("user", JSON.stringify(userData));
-
-        navigate("/overview");
-      } else {
-        setError("Invalid email or password");
-      }
-    } catch (err) {
-      console.error("Error during login:", err.message);
-      setError("An error occurred while logging in. Please try again.");
-    }
-  };
-
+  //       navigate("/overview");
+  //     } else {
+  //       setError("Invalid email or password");
+  //     }
+  //   } catch (err) {
+  //     console.error("Error during login:", err.message);
+  //     setError("An error occurred while logging in. Please try again.");
+  //   }
+  // };
+const handleSignIn =()=>{
+  navigate("/overview");
+}
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
       <div className="bg-white w-full max-w-md rounded-xl p-6 shadow-lg">
