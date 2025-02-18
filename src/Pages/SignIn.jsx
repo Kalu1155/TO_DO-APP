@@ -54,7 +54,7 @@ const handleSignIn =()=>{
           <span className="text-gray-800">TO</span>
           <span className="text-white bg-gray-800 rounded px-2">DO</span>
         </div>
-        <form onSubmit={handleSignIn}>
+        <form>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium mb-1">
               Email:
@@ -95,7 +95,7 @@ const handleSignIn =()=>{
           <button
             type="submit"
             className="bg-gray-800 text-white py-2 px-4 rounded-md w-full"
-          >
+          onClick={handleSignIn}>
             Sign In
           </button>
         </form>
