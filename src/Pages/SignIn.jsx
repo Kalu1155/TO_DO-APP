@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
@@ -20,33 +20,31 @@ const SignIn = () => {
     setLogin({ ...login, [name]: value });
   };
 
-  // const handleSignIn = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/users");
-  //     const users = response.data; 
-  //     const user = users.find(
-  //       (u) => u.email === login.email && u.password === login.password
-  //     );
+    try {
+      const response = await axios.get("http://localhost:5000/users");
+      const users = response.data; 
+      const user = users.find(
+        (u) => u.email === login.email && u.password === login.password
+      );
 
-  //     if (user) {
-  //       const userData = { username: user.username, loggedIn: true };
-  //       localStorage.setItem("user", JSON.stringify(userData));
+      if (user) {
+        const userData = { username: user.username, loggedIn: true };
+        localStorage.setItem("user", JSON.stringify(userData));
 
-  //       navigate("/overview");
-  //     } else {
-  //       setError("Invalid email or password");
-  //     }
-  //   } catch (err) {
-  //     console.error("Error during login:", err.message);
-  //     setError("An error occurred while logging in. Please try again.");
-  //   }
-  // };
-const handleSignIn =()=>{
-  navigate("/overview");
-}
+        navigate("/overview");
+      } else {
+        setError("Invalid email or password");
+      }
+    } catch (err) {
+      console.error("Error during login:", err.message);
+      setError("An error occurred while logging in. Please try again.");
+    }
+  };
+  
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
       <div className="bg-white w-full max-w-md rounded-xl p-6 shadow-lg">

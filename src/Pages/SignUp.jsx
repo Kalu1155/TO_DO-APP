@@ -21,7 +21,7 @@ const Signup = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/users", signUp);
+      const response = await axios.post("http://localhost:5000/users", signUp);
       const data = response.data;
       if (data) {
         // alert("Sign up successful");

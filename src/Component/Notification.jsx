@@ -29,6 +29,7 @@ const Notification = () => {
             Message
           </button>
         </div>
+        
       </div>  
     </>
   )

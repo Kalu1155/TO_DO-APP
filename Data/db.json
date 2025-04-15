@@ -3,7 +3,7 @@
     {
       "id": "1",
       "name": "Kalu David",
-      "username": "Pankji",
+      "username": "LUCIDme",
       "email": "kaludavid424@gmail.com",
       "password": "_kd500593D"
     },
@@ -48,6 +48,20 @@
       "username": "Queen",
       "email": "giftabukara@gmail.com",
       "password": ".........."
+    },
+    {
+      "id": "9341",
+      "name": "Naomi Cambet",
+      "username": "Naomi",
+      "email": "Naomi@example.crvoiom",
+      "password": "Naomi12345"
+    },
+    {
+      "id": "188c",
+      "name": "David  Chinemerem kalu",
+      "username": "lucideME",
+      "email": "kaludavid424@gmail.com",
+      "password": "_kd500593D"
     }
   ],
   "pages": [
@@ -59,20 +73,10 @@
   ],
   "tasks": [
     {
-      "id": "e23c",
-      "pageId": "2341",
-      "title": "Do more work",
-      "note": "hello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello  "
-    },
-    {
-      "id": "e2c",
-      "title": "Do more work",
-      "note": "hello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello  "
-    },
-    {
-      "id": "9e6c",
-      "title": "Wensday\n",
-      "note": "heko"
+      "id": "2fcd",
+      "title": "Hello world  igkfk ",
+      "note": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor dignissimos illo alias magni iste veritatis blanditiis totam quam cumque delectus reiciendis, fugit eum labore dolorum molestias, nulla ",
+      "isChecked": false
     }
   ]
 }
